@@ -1,5 +1,5 @@
 # gst-api-save-gstr1
-How to Save GSTR1 Via GST API
+How to GET GSTR1 Via GST API
 
 ## Requirements
 - Maven 3.3+
