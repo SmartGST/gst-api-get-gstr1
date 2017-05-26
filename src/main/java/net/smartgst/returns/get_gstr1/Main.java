@@ -6,6 +6,8 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import net.smartgst.auth.AESEncryption;
 import net.smartgst.auth.GSTAuth;
+import net.smartgst.auth.GSTCredential;
+import org.aeonbits.owner.ConfigFactory;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -40,14 +42,16 @@ public class Main {
     private static final String APPLICATION_JSON = "application/json";
 
     public static void main(String[] args) throws Exception {
-        InputStream pubKeyInpStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("GSTN_PublicKey.cer");
 
+        InputStream pubKeyInpStream = Thread.currentThread()
+                .getContextClassLoader()
+                .getResourceAsStream("GSTN_G2A_SANDBOX_UAT_public.cer");
 
+        GSTCredential gstCredential = ConfigFactory.create(GSTCredential.class);
         gstAuth = new GSTAuth(
-                CLIENT_ID, CLIENT_SECRET,
+                gstCredential,
                 USER_NAME, STATE_CD, IP_USR,
                 TXN, pubKeyInpStream);
-
         AESEncryption aesEncryption = gstAuth.getAesEncryption();
         if (gstAuth.otpRequest()) {
             System.out.println("OTP Request Success");
